@@ -1,0 +1,23 @@
+server:
+    port: 8081
+
+logging:
+    level:
+        com.example.catsapi: debug
+    file:
+        name: logs/app.log
+
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:15432/cats_db
+        username: admin
+        password: pswd123
+    jpa:
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+    liquibase:
+        enabled: true
+        change-log: classpath:db/changelog/db.changelog-master.yaml
