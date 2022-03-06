@@ -40,8 +40,5 @@ build/
 # Logs
 /logs
 
-# kind
-/my_kind
-
 # Other
 /.attach_*
