@@ -5,7 +5,7 @@
 # Микросервис
 - Простой микросервис на Spring Boot. Всего 2 метода: сохранить кота и показать список котов.
 
-- Использована БД _Postgres_ в контейнере _Docker_. Настройки контейнера указываем
+- Использована БД _Postgres_ в контейнере _Docker_. Настройки контейнера указываем  
 в файле _docker-compose.yaml_:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/01_docker_compose.png)
 
