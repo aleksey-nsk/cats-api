@@ -366,7 +366,7 @@ http://localhost:8888/cats-api/api/v1/cat
 http://localhost:8888/cats-api/api/v1/cat  
 и видим, что всё работает.
 
-# Использованные источники:
+# Использованные источники
 - [Пишем Spring Boot микросервис для деплоя в Kubernetes](https://www.youtube.com/watch?v=KPLJ0i5Ocws)
 - [Документация Kind](https://kind.sigs.k8s.io/)
 - [Установка и настройка kubectl](https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/)
