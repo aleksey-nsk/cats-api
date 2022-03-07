@@ -9,7 +9,7 @@
 в файле _docker-compose.yaml_:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/01_docker_compose.png)
 
-- Настройки приложения (порт, логирование, подключение к БД) прописываем
+- Настройки приложения (порт, логирование, подключение к БД) прописываем  
 в файле src/main/resources/_application.yaml_:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/02_application.png)
 
