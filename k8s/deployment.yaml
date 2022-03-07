@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: cats-api-deployment # название деплоймента
+    name: cats-api-deployment # название Деплоймента
     labels:
         app: cats-api # метка
 spec:
-    #    replicas: 3 # запустить в таком количестве экземпляров те приложения, которые имеют указанную метку
+    # replicas: 3 # запустить в таком количестве экземпляров те приложения, которые имеют указанную метку
     replicas: 10
     selector:
         matchLabels:

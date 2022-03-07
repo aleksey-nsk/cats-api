@@ -10,7 +10,6 @@ logging:
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver
-        #        url: jdbc:postgresql://localhost:15432/cats_db
         url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:15432/cats_db
         username: admin
         password: pswd123
