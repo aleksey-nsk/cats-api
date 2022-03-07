@@ -321,8 +321,8 @@ primarily designed for testing Kubernetes itself, but may be used for local deve
 Применим этот конфиг:  
 `kubectl apply -f k8s/ingress.yaml` => _ingress.networking.k8s.io/my-ingress created_
 
-10. Посмотрим в файл **kind-config.yaml**: **hostPort: 8888**. Пойдём в браузере на **порт 8888** и посмотрим, что
-нас ждёт на **cats-api**:  
+10. Посмотрим в файл **kind-config.yaml**. Тут видим порт (**hostPort: 8888**).  
+Пойдём в браузере на **порт 8888** и посмотрим, что нас ждёт на **cats-api**:  
 http://localhost:8888/cats-api/api/v1/cat  
 Видим ошибку 404:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/24_error_page.png)
