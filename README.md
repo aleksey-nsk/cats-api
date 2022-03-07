@@ -162,7 +162,7 @@ are correct and that the postmaster is accepting TCP/IP connections"_
 
 2. Теперь реализуем часть, связанную с Cats API. Сначала запустим наш Docker image в **Kind**-е.
 
-**Kind** — это инструмент для запуска локальных кластеров Kubernetes с помощью "узлов"
+**Kind** — это инструмент для запуска локальных кластеров Kubernetes с помощью "узлов"  
 контейнера Docker. **Kind** - то эмулятор Кубернетеса.
 
 **Kind** is a tool for running local Kubernetes clusters using Docker container “nodes”. Kind was
