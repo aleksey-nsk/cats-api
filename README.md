@@ -3,26 +3,26 @@
 - Простой **микросервис на Spring Boot**. Всего 2 метода: сохранить кота и показать список котов.
 
 - Использована БД **Postgres** в контейнере **Docker**. Настройки контейнера указываем в файле **docker-compose.yaml**:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/01_docker_compose.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/01_docker_compose.png)
 
 - Настройки приложения (порт, логирование, подключение к БД) прописываем в файле src/main/resources/**application.yaml**:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/02_application.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/02_application.png)
 
 - Для миграций используется **Liquibase**.
 
 - Для документирования REST API используем **Springdoc OpenAPI UI**. Для этого нужно добавить зависимость:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/03_springdoc.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/03_springdoc.png)
 
 Открываем приложение (список всех котиков) по адресу http://localhost:8081/api/v1/cat  
 
 Документация к API доступна по адресу http://localhost:8081/swagger-ui/index.html. Тут же можно тестировать
 конечные точки (кнопка "**Try it out**"):  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/04_open_doc.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/04_open_doc.png)
 
 # Как поместить микросервис в Docker-контейнер
 
 1. Сначала поместим наш кошачий сервис в Docker-контейнер. Создаём в корне проекта **Dockerfile** с содержимым:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/05_dockerfile.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/05_dockerfile.png)
 
 - `alpine` - a minimal Docker image based on **Alpine Linux** with a complete package index and only 5 MB in size!
 Alpine Linux - дистрибутив Linux, ориентированный на безопасность, легковесность и нетребовательность к ресурсам.
@@ -44,7 +44,7 @@ Alpine Linux - дистрибутив Linux, ориентированный на
 
 2. Чтобы сэкономить время и не билдить каждый раз в консоли руками, создаём в корне
 скрипт **build_and_push.sh** с содержимым:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/06_build_script.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/06_build_script.png)
 - `docker build . -t alexz2/cats-api:1.0.0` - сбилдить Dockerfile.
 - Точка `.` означает, что будем искать Dockerfile в текущей директории.
 - Через `-t` указываем имя образа и версию.
@@ -63,10 +63,10 @@ Alpine Linux - дистрибутив Linux, ориентированный на
 - полученный образ пушится на Docker Hub.
 
 6. В итоге видим свой образ:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/07_see_image.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/07_see_image.png)
 
 7. А также видим, что он загружен на Docker Hub:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/08_docker_hub.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/08_docker_hub.png)
 
 8. Теперь попробуем запустить из нашего образа контейнер с приложением. Пишем команду в консоли:  
 `docker run -it --rm alexz2/cats-api:1.0.0`  
@@ -89,13 +89,13 @@ are correct and that the postmaster is accepting TCP/IP connections._ т.к. п�
 
 Теперь надо узнать айпишник нашего хоста (чтобы указать его для контейнера). Пишем в консоли
 команду `ifconfig` и получаем:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/09_ip_host.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/09_ip_host.png)
 
 Далее опять пробуем запустить из нашего образа контейнер с приложением. Немного модернизируем
 команду (добавляем `-e DATASOURCE_HOST=192.168.1.35`):  
 `docker run -it --rm -e DATASOURCE_HOST=192.168.1.35 alexz2/cats-api:1.0.0`  
 и видим что теперь всё запустилось без ошибок:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/10_app_start_in_container.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/10_app_start_in_container.png)
    
 Далее мы можем **прокинуть порт** на хост (`-p 8082:8081`):  
 `docker run -it --rm -e DATASOURCE_HOST=192.168.1.35 -p 8082:8081 alexz2/cats-api:1.0.0`
@@ -106,7 +106,7 @@ are correct and that the postmaster is accepting TCP/IP connections._ т.к. п�
 # Как задеплоить микросервис в Kubernetes
 
 1. Что собираемся сделать, схема:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/11_schema.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/11_schema.png)
 
 **Кубернетес кластер** - это набор машин, состоящий обычно из 1 или нескольких **мастеров**, и большого
 количества **воркеров**. Мастер-машины определяют, на каких воркерах должно работать наше приложение,
@@ -169,7 +169,7 @@ for local development or CI.
     sudo mv ./kind /usr/local/bin/kind
 
 В итоге видим:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/12_kind.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/12_kind.png)
 
 Проверяем версию в консоли:  
 `kind version` => `kind v0.11.1 go1.16.4 linux/amd64`
@@ -190,7 +190,7 @@ for local development or CI.
 - Переместить двоичный файл в директорию из переменной окружения PATH:  
 `sudo mv ./kubectl /usr/local/bin/kubectl`  
 В итоге видим:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/13_kubectl.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/13_kubectl.png)
 
 - Проверить установленную версию:  
 `kubectl version --client` => `Client Version: version.Info{Major:"1", Minor:"23", GitVersion:"v1.23.0", GitCommit:"ab69524f795c42094a6630298ff53f3c3ebab7f4", GitTreeState:"clean", BuildDate:"2021-12-07T18:16:20Z", GoVersion:"go1.17.3", Compiler:"gc", Platform:"linux/amd64"}`
@@ -199,7 +199,7 @@ for local development or CI.
 установить Ingress: пример конфига возьмём [отсюда](https://kind.sigs.k8s.io/docs/user/ingress/).
   
 Создадим в корне проекта конфиг **kind-config.yaml** с таким содержимым:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/14_kind_config.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/14_kind_config.png)
 - Видим что в нашем kind-конфиге кластер: `kind: Cluster`.
 - Версия: `apiVersion: kind.x-k8s.io/v1alpha4`.  
 - `nodes:` - ноды на которых будет запущено наше приложение.
@@ -215,7 +215,7 @@ for local development or CI.
 Теперь создаём кластер командой:  
 `kind create cluster --config kind-config.yaml`  
 и видим что кластер создался:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/15_cluster.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_cluster.png)
  
 6.Теперь установим [Ingress NGINX плагин](https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx).
 Команда в консоли которая ставит этот плагин:  
@@ -240,10 +240,10 @@ for local development or CI.
 
 Создадим в корне проекта папку **k8s** и в неё будем складывать все конфиги, связанные с Кубернетесом.
 В итоге тут будут такие конфиги:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/16_k8s_directory.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/16_k8s_directory.png)
 
 Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. Получается так:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/17_deployment.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment.png)  
 `kind: Deployment` - видим, что это сущность Деплоймент.
 
 Далее команда в терминале:    
@@ -253,7 +253,7 @@ for local development or CI.
 `kubectl get pods`  
 Чтобы мониторить поды в реальном времени нужно добавить флаг **--watch**, т.е. такая команда:  
 `kubectl get pods --watch`  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/18_get_pods.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/18_get_pods.png)
 
 Видим, что поды запускаются и крашатся. Посмотрим ошибку:  
 `kubectl logs cats-api-deployment-58b69bb468-b5xpv`  
@@ -275,10 +275,10 @@ for local development or CI.
 Далее:    
 kubectl apply -f k8s/deployment.yaml => deployment.apps/cats-api-deployment created
 и опять `kubectl get pods` => теперь видим что все 3 пода запущены:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/19_pods_running.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/19_pods_running.png)
 Опять смотрим логи: `kubectl logs cats-api-deployment-869476485d-k2txk`  
 и видим что теперь всё запустилось и всё ок:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/20_pod_ok.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/20_pod_ok.png)
 
 Мы можем больше: мы можем **пробросить порт**:    
 `kubectl port-forward cats-api-deployment-869476485d-k2txk 8899:8081`  
@@ -291,18 +291,18 @@ kubectl apply -f k8s/deployment.yaml => deployment.apps/cats-api-deployment crea
 Тут скопипастим пример сервиса.
 
 Создаём в папке k8s файл **service.yaml**, вставляем пример сервиса и редактируем:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/21_service.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/21_service.png)
 
 Применим свой сервис:
 `kubectl apply -f k8s/service.yaml` => `service/cats-api-service created`
 
 Команда в терминале, чтобы увидеть наш сервис `cats-api-service`:  
 `kubectl get service`:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/22_get_service.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/22_get_service.png)
 
 9. Теперь сделаем конфиг с Ингрессом: скопипастим образец [тут](https://kind.sigs.k8s.io/docs/user/ingress/),
 создадим файл k8s/**ingress.yaml**, и подредактируем:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/23_ingress.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress.png)
 - это и будет единая точка входа в наш кластер
 - назвали `my-ingress`
 
@@ -313,19 +313,19 @@ kubectl apply -f k8s/deployment.yaml => deployment.apps/cats-api-deployment crea
 нас ждёт на `cats-api`:  
 http://localhost:8888/cats-api/api/v1/cat  
 и видим ошибку 404:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/24_error_page.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/24_error_page.png)
 Ощибка 404 потому что к путю теперь добавлен `cats-api`. Чтобы это пофиксить надо открыть deployment.yaml и
 сказать нашему приложению, чтобы оно слушало нас начиная с `cats-api`. Для этого добавим ещё одну
 **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути
 должно стартовать наше приложение. Конечная версия deployment.yaml выглядит так:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/25_deployment_final.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/25_deployment_final.png)
 
 Обновим  наши поды:     
 `kubectl apply -f k8s/deployment.yaml` => `deployment.apps/cats-api-deployment configured`
 
 Проверим что с подами всё хорошо:  
 `kubectl get pods` => видим что старые поды удалены, новые поднялись (имена другие):  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/26_new_pods.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/26_new_pods.png)
 
 Опять пробуем открыть    
 http://localhost:8888/cats-api/api/v1/cat
@@ -350,7 +350,7 @@ http://localhost:8888/cats-api/api/v1/cat
 `kubectl apply -f k8s/deployment.yaml` => `deployment.apps/cats-api-deployment configured`
 
 Теперь смотрим поды: `kubectl get pods` => и видим все 10 штук:  
-![](https://github.com/aleksey-nsk/cats-api/blob/main/screenshots/27_now_10_pods.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/27_now_10_pods.png)
 
 Далее опять открываем  
 http://localhost:8888/cats-api/api/v1/cat  
