@@ -5,15 +5,15 @@
 # Микросервис
 - Простой микросервис на Spring Boot. Всего 2 метода: сохранить кота и показать список котов.
 
-- Использована БД _Postgres_ в контейнере _Docker_. Настройки контейнера указываем  
-в файле _docker-compose.yaml_:  
+- Использована БД **Postgres** в контейнере **Docker**. Настройки контейнера указываем  
+в файле **docker-compose.yaml**:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/01_docker_compose.png)
 
 - Настройки приложения (порт, логирование, подключение к БД) прописываем  
-в файле src/main/resources/_application.yaml_:  
+в файле src/main/resources/**application.yaml**:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/02_application.png)
 
-- Для миграций используется _Liquibase_.
+- Для миграций используется **Liquibase**.
 
 - Для документирования REST API используем **Springdoc OpenAPI UI**. Для этого нужно добавить зависимость:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/03_springdoc.png)
