@@ -35,10 +35,11 @@
 
 - `apk add openjdk11` - install jdk11 in Alpine Linux docker image.
 
-- `COPY target/cats-api-0.0.1-SNAPSHOT.jar /app.jar` - положить jar-файл в Docker image (предварительно надо
-выполнить в консоли команду **mvn clean package** чтобы создать этот jar-ник в папке **target**).
-Указываем, откуда взять файл с нашего хоста, и куда положить в контейнер (в данном случае в корень, и
-назвать **app.jar**).
+- `COPY target/cats-api-0.0.1-SNAPSHOT.jar /app.jar` - скопировать jar-файл в Docker image (предварительно надо
+выполнить в консоли команду **mvn clean package** чтобы создать этот jar-ник в папке **target**). Чтобы скопировать
+файлы надо указать 2 пути:  
+`target/cats-api-0.0.1-SNAPSHOT.jar` - путь до файлов на хост-машине относительно файла Dockerfile  
+`/app.jar` - и путь куда положить эти файлы внутри образа (в данном случае в корень, и назвать **app.jar**).  
 
 - `ENTRYPOINT ["java", "-jar", "/app.jar"]` - ENTRYPOINT позволяет задавать дефолтные команды и аргументы
 во время запуска контейнера. Она похожа на CMD, но параметры ENTRYPOINT не переопределяются, если контейнер
@@ -50,9 +51,11 @@
 2. Чтобы сэкономить время и не билдить каждый раз в консоли руками, создаём в корне
 скрипт **build_and_push.sh** с содержимым:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/06_build_script.png)
-- `docker build . -t alexz2/cats-api:1.0.0` - сбилдить Dockerfile.
-- Точка `.` означает, что будем искать Dockerfile в текущей директории.
-- Через `-t` указываем имя образа и версию.
+- `docker build -t alexz2/cats-api:1.0.0 . -f ./Dockerfile` - сбилдить образ
+- `docker build` - команда для создания образа
+- `-t alexz2/cats-api:1.0.0` - с помощью параметра -t задаём имя образу и версию
+- `.` - указываем где искать файлы для команды COPY (в данном случае - в текущей директории)
+- `-f ./Dockerfile` - путь до Dockerfile
 
 3. Также надо через консоль залогиниться на **Docker Hub**:    
 - `docker login`    
@@ -72,16 +75,20 @@
 6. В итоге видим свой образ:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/07_1_see_image.png)  
 
-Если запустим ещё раз команду `./build_and_push.sh`, то сбилдится новый образ
+Если запустим ещё раз команду `./build_and_push.sh`, то сбилдится новый образ  
 и запушится на Docker Hub:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/07_2_build_again.png)  
 
-7. А также видим, что он загружен на Docker Hub:  
+7. Также видим, что образ загружен на Docker Hub:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/08_docker_hub.png)
 
 8. Теперь попробуем запустить из нашего образа контейнер с приложением. Пишем команду в консоли:  
 `docker run -it --rm alexz2/cats-api:1.0.0`  
-и получаем ошибку:  
+- `docker run` - запустить контейнер из образа
+- `--rm` - если запустить контейнер с таким ключом, то он будет автоматически удалён сразу после остановки
+- `alexz2/cats-api:1.0.0` - образ
+
+Получаем ошибку:  
 _"org.postgresql.util.PSQLException: Connection to localhost:15431 refused. Check that the hostname and port
 are correct and that the postmaster is accepting TCP/IP connections"_  
 т.к. приложение пытается запуститься в контейнере, а там нет БД.
