@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    db:
+        image: 'postgres:13'
+        container_name: 'cats_db'
+        ports:
+            - 15431:5432
+        environment:
+            - 'POSTGRES_DB=cats'
+            - 'POSTGRES_USER=admin1'
+            - 'POSTGRES_PASSWORD=pswd123'
+        volumes:
+            - db-data:/var/lib/postgresql/data
+
+volumes:
+    db-data:

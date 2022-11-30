@@ -6,7 +6,7 @@
 - Простой микросервис на Spring Boot. Всего 2 метода: сохранить кота и показать список котов.
 
 - Использована БД **Postgres** в контейнере **Docker**. Настройки контейнера указываем  
-в файле **docker-compose.yaml**:  
+в файле docker/**docker-compose.yaml**:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/01_docker_compose.png)
 
 - Настройки приложения (порт, логирование, подключение к БД) прописываем  
@@ -70,7 +70,11 @@
 - полученный образ пушится на Docker Hub.
 
 6. В итоге видим свой образ:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/07_see_image.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/07_1_see_image.png)  
+
+Если запустим ещё раз команду `./build_and_push.sh`, то сбилдится новый образ
+и запушится на Docker Hub:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/07_2_build_again.png)  
 
 7. А также видим, что он загружен на Docker Hub:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/08_docker_hub.png)
@@ -78,14 +82,17 @@
 8. Теперь попробуем запустить из нашего образа контейнер с приложением. Пишем команду в консоли:  
 `docker run -it --rm alexz2/cats-api:1.0.0`  
 и получаем ошибку:  
-_"org.postgresql.util.PSQLException: Connection to localhost:15432 refused. Check that the hostname and port
+_"org.postgresql.util.PSQLException: Connection to localhost:15431 refused. Check that the hostname and port
 are correct and that the postmaster is accepting TCP/IP connections"_  
 т.к. приложение пытается запуститься в контейнере, а там нет БД.
 
 В файле src/main/resources/**application.yaml** укажем: 
 
-    # url: jdbc:postgresql://localhost:15432/cats_db
-    url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:15432/cats_db
+    # БЫЛО:
+    # url: jdbc:postgresql://localhost:15431/cats
+     
+    # СТАЛО:
+    url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:15431/cats
 
 когда мы работаем с Docker, то в большинстве случаев указываем конфигурации через **переменные окружения**.
 На Spring-е мы можем прописать **переменную окружения DATASOURCE_HOST** и тогда у нас подтянутся наши настройки.
@@ -101,13 +108,13 @@ are correct and that the postmaster is accepting TCP/IP connections"_
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/09_ip_host.png)
 
 Далее опять пробуем запустить из нашего образа контейнер с приложением. Немного модернизируем
-команду (добавляем **-e DATASOURCE_HOST=192.168.1.35**):  
-`docker run -it --rm -e DATASOURCE_HOST=192.168.1.35 alexz2/cats-api:1.0.0`  
-и видим что теперь всё запустилось без ошибок:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/10_app_start_in_container.png)
+команду (добавляем **-e DATASOURCE_HOST=192.168.1.66**):  
+`docker run -it --rm -e DATASOURCE_HOST=192.168.1.66 alexz2/cats-api:1.0.0`  
+и видим что теперь всё запустилось без ошибок.  
    
 Далее мы можем **прокинуть порт** на хост (**-p 8082:8081**):  
-`docker run -it --rm -e DATASOURCE_HOST=192.168.1.35 -p 8082:8081 alexz2/cats-api:1.0.0`
+`docker run -it --rm -e DATASOURCE_HOST=192.168.1.66 -p 8082:8081 alexz2/cats-api:1.0.0`  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/10_app_start_in_container.png)
 
 Теперь приложение доступно в браузере по адресу: http://localhost:8082/api/v1/cat  
 а документация - по адресу: http://localhost:8082/swagger-ui/index.html
