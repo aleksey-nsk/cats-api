@@ -195,7 +195,7 @@ testing Kubernetes itself, but may be used for local development or CI.
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/12_kind.png)
 
 Проверяем версию в консоли:  
-`kind version` => _kind v0.11.1 go1.16.4 linux/amd64_
+`kind version` => _kind **v0.11.1** go1.16.4 linux/amd64_
 
 3. Далее установим утилиту **Kubectl** - это клиент Kubernetes-а.
 
