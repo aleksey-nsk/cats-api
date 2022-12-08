@@ -8,12 +8,10 @@
 - Простой микросервис на Spring Boot. Всего 2 метода: сохранить кота и показать список котов.
 
 - Использована БД **Postgres** в контейнере **Docker**. Настройки контейнера указываем  
-  в файле docker/**docker-compose.yaml**:  
-  ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/01_docker_compose.png)
+  в файле docker/**docker-compose.yaml**.
 
 - Настройки приложения (порт, логирование, подключение к БД) прописываем  
-  в файле src/main/resources/**application.yaml**:  
-  ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/02_application.png)
+  в файле src/main/resources/**application.yaml**.
 
 - Для миграций используется **Liquibase**.
 
