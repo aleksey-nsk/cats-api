@@ -223,25 +223,45 @@ kubectl для развертывания приложений, проверки
 4. Запустим **kind** так, чтобы на него можно было потом легко установить Ingress: пример конфига
    возьмём [отсюда](https://kind.sigs.k8s.io/docs/user/ingress/).
 
-Создадим в корне проекта конфиг **kind-config.yaml** с таким содержимым:  
+Создадим конфиг k8s/**kind-config.yaml** с таким содержимым:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/14_kind_config.png)
 
-- `kind: Cluster` - видим что в нашем kind-конфиге кластер.
+- `kind: Cluster` - видим что в нашем конфиге описан кластер.
 - `apiVersion: kind.x-k8s.io/v1alpha4` - версия.
-- `nodes` - ноды на которых будет запущено наше приложение.
+- `nodes` - в этом разделе описаны ноды.
 - Нода `control-plane` это как раз **мастер-нода**.
 - `kubeadmConfigPatches` - конфигурация для **kind**-а, чтобы всё потом заработало с **Ingress**-ом.
 - `extraPortMappings` - на мастер-ноде прокидываем порты, чтобы как раз была единая точка входа, т.е. на мастере будет
   открыт конкретный порт, на который мы будем слать запросы.
 - `role: worker` - также сделаем 3 **воркера**. В итоге будет 1 мастер и 3 воркера.
 
-5. Далее удалим на всякий случай кластер (вдруг ранее уже был создан какой-то **kind-кластер**). В консоли:  
-   `kind delete cluster` => _Deleting cluster "kind" ..._
+5. Сначала убедимся, что кластер отсутствует:  
+`kind get clusters` => вывод в терминал такой: _No kind clusters found._  
 
+Посмотрим конфигурацию kubectl:  
+`kubectl config view` => вывод такой:  
+
+    apiVersion: v1
+    clusters: null
+    contexts: null
+    current-context: ""
+    kind: Config
+    preferences: {}
+    users: null
+   
 Теперь создаём кластер командой:  
-`kind create cluster --config kind-config.yaml`  
+`kind create cluster --name my-cluster --config kind-config.yaml`    
 и видим что кластер создался:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_cluster.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_1_cluster.png)  
+
+Снова посмотрим конфигурацию kubectl:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_2_config.png)  
+
+Посмотрим ноды кластера:    
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_3_get_nodes.png)  
+
+Также проверим следующие команды:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_4_docker_commands.png)  
 
 6.Теперь установим [Ingress NGINX плагин](https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx). Команда в консоли
 которая ставит этот плагин:  
