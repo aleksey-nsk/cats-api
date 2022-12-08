@@ -197,7 +197,7 @@ testing Kubernetes itself, but may be used for local development or CI.
 Проверяем версию в консоли:  
 `kind version` => _kind **v0.11.1** go1.16.4 linux/amd64_
 
-3. Далее установим утилиту **Kubectl** - это клиент Kubernetes-а.
+3. Далее установим утилиту **kubectl** - это клиент Kubernetes-а.
 
 Инструмент командной строки **kubectl** позволяет запускать команды для **кластеров Kubernetes**. Вы можете использовать
 kubectl для развертывания приложений, проверки и управления ресурсов кластера, а также для просмотра логов.
