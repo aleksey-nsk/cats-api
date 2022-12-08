@@ -126,7 +126,7 @@ are correct and that the postmaster is accepting TCP/IP connections"_
 Теперь приложение доступно в браузере по адресу: http://localhost:8082/api/v1/cat  
 а документация - по адресу: http://localhost:8082/swagger-ui/index.html
 
-# Как задеплоить микросервис в Kubernetes
+# Как задеплоить микросервис в Kubernetes (используя kind)
 
 1. Что собираемся делать, схема:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/11_schema.png)
