@@ -317,7 +317,7 @@ kubectl для развертывания приложений, проверки
 В папку **k8s** будем складывать все конфиги, связанные с Кубернетесом. В самом конце тут будут такие конфиги:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/16_k8s_directory.png)
 
-Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. В результате получается так:  
+Создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. В результате получается так:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment_3.png)  
 
 Далее команда в терминале:    
@@ -337,17 +337,17 @@ kubectl для развертывания приложений, проверки
 Ошибка такая:  
 _org.postgresql.util.PSQLException: Connection to localhost:15431 refused. Check that the hostname and port are
 correct and that the postmaster is accepting TCP/IP connections_  
-Нужно добавить **environment-переменную**: опять идём в **deployment.yaml** и добавляем блок env:  
+Нужно добавить **environment-переменную**: опять идём в k8s/**deployment.yaml** и добавляем блок env:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/18_2_env.png)  
 
 Далее удалим поды:  
 `kubectl delete pods --all` => все поды удалены.  
 Неверно! Надо было удалить не поды а Деплоймент! Потому что Деплоймент следит за тем, чтобы было 3 пода. И если это
 нарушается, то он пытается восстановить это. Поэтому пишу:  
-`kubectl delete deployments --all` => _deployment.apps "cats-api-deployment" deleted_  
+`kubectl delete deploy --all` => _deployment.apps "cats-api-deployment" deleted_  
 И вот теперь:  
 `kubectl get pods` => _No resources found in default namespace._  
-`kubectl get deployments` => _No resources found in default namespace._  
+`kubectl get deploy` => _No resources found in default namespace._  
 
 Далее:    
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment created_  
@@ -361,7 +361,8 @@ correct and that the postmaster is accepting TCP/IP connections_
 `kubectl port-forward cats-api-deployment-869476485d-k2txk 8899:8081`  
 где **8899** - порт на хост-машине, **8081** - порт внутри контейнера.  
 Теперь приложение в браузере доступно по адресу: http://localhost:8899/api/v1/cat  
-Документация - по адресу: http://localhost:8899/swagger-ui/index.html
+Текущий IP адрес: http://localhost:8899/api/v1/ip  
+Документация доступна по адресу: http://localhost:8899/swagger-ui/index.html
 
 7. Далее перейдём к уровню с **сервисами**. Гуглим "_kubernetes service example_" и открываем  
    [инструкцию по Service](https://kubernetes.io/docs/concepts/services-networking/service/). Тут скопипастим

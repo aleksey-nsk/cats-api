@@ -11,8 +11,7 @@ metadata:
         app: cats-api
 
 spec:
-    #    replicas: 3  # количество экземпляров
-    replicas: 1
+    replicas: 3  # количество экземпляров
 
     # С какими подами наш деплоймент будет работать
     selector:
@@ -36,6 +35,3 @@ spec:
                     env:
                         -   name: DATASOURCE_HOST
                             value: 192.168.1.69
-
-#                        -   name: spring.mvc.servlet.path
-#                            value: /cats-api
