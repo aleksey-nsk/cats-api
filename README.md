@@ -423,6 +423,25 @@ correct and that the postmaster is accepting TCP/IP connections_
 http://localhost:8888/cats-api/api/v1/cat  
 и видим, что всё работает.
 
+12. В конце всё удалим:   
+`kubectl delete svc --all`  
+`kubectl delete deploy --all`  
+`kind delete cluster --name my-cluster`  
+
+Всё удалено, проверяем:  
+- `kind get clusters` => _No kind clusters found._  
+
+  
+- `kubectl config view`  => вывод в терминал:  
+
+         apiVersion: v1
+         clusters: null
+         contexts: null
+         current-context: ""
+         kind: Config
+         preferences: {}
+         users: null
+
 # Использованные источники
 
 - [Пишем Spring Boot микросервис для деплоя в Kubernetes](https://www.youtube.com/watch?v=KPLJ0i5Ocws)
