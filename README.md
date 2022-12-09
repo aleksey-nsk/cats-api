@@ -375,7 +375,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 `kubectl apply -f k8s/service.yaml` => _service/cats-api-service created_
 
 Команда в терминале:    
-`kubectl get service` => увидим наш сервис **cats-api-service**:  
+`kubectl get svc` => увидим наш сервис **cats-api-service**:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/22_get_service.png)
 
 8. Теперь сделаем конфиг с Ингрессом: скопипастим образец
