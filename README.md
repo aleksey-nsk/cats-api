@@ -289,7 +289,7 @@ kubectl для развертывания приложений, проверки
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_6_docker_commands_3.png)  
 
 5. Теперь установим [Ingress NGINX](https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx). Команда в консоли
-   которая ставит этот плагин:  
+   для установки:  
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml`  
    
 результат выполнения команды:  
@@ -302,7 +302,7 @@ kubectl для развертывания приложений, проверки
       --selector=app.kubernetes.io/component=controller \
       --timeout=90s
 
-=> _pod/ingress-nginx-controller-59cbb6ccb6-mkdww condition met_ (всё ок, Ingress поставился).
+=> _pod/ingress-nginx-controller-6bccc5966-sxdfc condition met_ (всё ок, Ingress поставился).
 
 6. Начнём с самого нижнего уровня, который связан с **подами**. Посмотрим как сделать конфиг, чтобы Кубернетес-кластер
    нас понял и запустил наше приложение в 3 экземплярах.
