@@ -307,7 +307,7 @@ kubectl для развертывания приложений, проверки
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/16_k8s_directory.png)
 
 Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. В результате получается так:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment_2.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment_3.png)  
 
 Далее команда в терминале:    
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment created_
