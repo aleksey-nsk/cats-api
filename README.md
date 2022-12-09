@@ -361,7 +361,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 `kubectl port-forward cats-api-deployment-869476485d-k2txk 8899:8081`  
 где **8899** - порт на хост-машине, **8081** - порт внутри контейнера.  
 Теперь приложение в браузере доступно по адресу: http://localhost:8899/api/v1/cat  
-Текущий IP адрес: http://localhost:8899/api/v1/ip  
+Текущий IP адрес: http://localhost:8899/api/v1/ip => **10.244.2.7**  
 Документация доступна по адресу: http://localhost:8899/swagger-ui/index.html
 
 7. Далее перейдём к уровню с **сервисами**. Гуглим "_kubernetes service example_" и открываем  
