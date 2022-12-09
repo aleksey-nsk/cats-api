@@ -170,24 +170,36 @@ DATASOURCE_HOST=192.168.1.69**):
 
 А теперь что будет, если придёт человек и скажет, не могли бы вы предоставить мне ответ на мой запрос к Cats API, т.е.
 прилетит некий запрос извне. Чтобы обращаться извне к cats сервису, его надо специальным образом настроить. И для этого
-у Кубернетеса есть специальный плагин, который называется **Ingress plugin**. У него есть разные реализации. Мы возьмём
-реализацию от NGINX-а (**Ingress NGINX**). Ingress может перенаправлять запросы на сервисы (**cats service** и **dogs
+у Кубернетеса есть **Ingress Controller**. У Ingress-контроллера есть разные реализации: мы возьмём реализацию
+от NGINX-а (**NGINX Ingress Controller**). Ingress может перенаправлять запросы на сервисы (**cats service** и **dogs
 service**). Он чем то похож на сервисы, но если сервисы созданы чтобы распределять нагрузку, а также используются в
-качестве **сервис дискавери** (т.е. они знают о том где запущены наши поды), то Ingress больше нужен для того чтобы
+качестве "сервис дискавери" (т.е. они знают о том где запущены наши поды), то Ingress больше нужен для того чтобы
 **разроутить** точку входа, когда кто-то сторонний заходит в наш кластер и хочет сделать какой-то запрос. И в итоге
 клиенту нашего приложения не надо думать о том, какие там есть сервисы, сколько там подов и т.д.. Клиент просто знает
 что по одному урлу он получит одну информацию, а по другому урлу он получит другую информацию. И ему ничего не надо
 знать о внутреннем механизме Кубернетеса.
 
+Схема 1 Кубернетес кластера с Ingress Controller-ом:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic1.png)  
+
+Схема 2:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic2.png)  
+
+Схема 3:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic3.png)  
+
+Схема 4:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic4.png)  
+
 Зачем всё это нужно? Почему Кубернетес так удобен? Когда мы всё это поднимем, то Кубер сам будет определять, на какой
 машине всё это запускать. Если бы не было Кубера, то нам бы самим пришлось деплоить
 каждый раз, думать насчёт сервис дискавери, и т.д.. Например мы работали в 3 **инстансах**, а потом
-решили что в 5 будет лучше: для Кубера это ещё одна простая команда. Без кубера нам пришлось бы долго возиться с этим.
+решили что в 10 будет лучше: для Кубера это ещё одна простая команда. Без кубера нам пришлось бы долго возиться с этим.
 
 2. Теперь реализуем часть, связанную с Cats API. Сначала запустим наш Docker image в **Kind**-е.
 
 **Kind** — это инструмент для запуска локальных кластеров Kubernetes с помощью "узлов"  
-контейнера Docker. **Kind** - то эмулятор Кубернетеса.
+контейнера Docker. **Kind** - это эмулятор Кубернетеса.
 
 **Kind** is a tool for running local Kubernetes clusters using Docker container “nodes”. Kind was primarily designed for
 testing Kubernetes itself, but may be used for local development or CI.
@@ -243,7 +255,7 @@ kubectl для развертывания приложений, проверки
   открыт конкретный порт, на который мы будем слать запросы.
 - `role: worker` - также сделаем 3 **воркера**. В итоге будет 1 мастер и 3 воркера.
 
-5. Сначала убедимся, что кластер отсутствует:  
+Сначала убедимся, что кластер отсутствует:  
 `kind get clusters` => вывод в терминал такой: _No kind clusters found._  
 
 Посмотрим конфигурацию kubectl:  
@@ -273,7 +285,7 @@ kubectl для развертывания приложений, проверки
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_5_docker_commands_2.png)  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_6_docker_commands_3.png)  
 
-6. Теперь установим [Ingress NGINX плагин](https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx). Команда в консоли
+5. Теперь установим [Ingress NGINX](https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx). Команда в консоли
    которая ставит этот плагин:  
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml`  
    
@@ -289,19 +301,7 @@ kubectl для развертывания приложений, проверки
 
 => _pod/ingress-nginx-controller-59cbb6ccb6-mkdww condition met_ (всё ок, Ingress поставился).
 
-Схема 1 Кубернетес кластера с Ingress Controller-ом:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic1.png)    
-
-Схема 2:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic2.png)  
-
-Схема 3:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic3.png)  
-
-Схема 4:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic4.png)  
-
-7. Начнём с самого нижнего уровня, который связан с **подами**. Посмотрим как сделать конфиг, чтобы Кубернетес-кластер
+6. Начнём с самого нижнего уровня, который связан с **подами**. Посмотрим как сделать конфиг, чтобы Кубернетес-кластер
    нас понял и запустил наше приложение в 3 экземплярах.
 
 Гуглим "_kubernetes deployment example_" и
@@ -360,7 +360,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 Теперь приложение в браузере доступно по адресу: http://localhost:8899/api/v1/cat  
 Документация - по адресу: http://localhost:8899/swagger-ui/index.html
 
-8. Далее перейдём к уровню с **сервисами**. Гуглим "_kubernetes service example_" и открываем  
+7. Далее перейдём к уровню с **сервисами**. Гуглим "_kubernetes service example_" и открываем  
    [инструкцию по Service](https://kubernetes.io/docs/concepts/services-networking/service/). Тут скопипастим
    пример сервиса.
 
@@ -374,7 +374,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 `kubectl get service` => увидим наш сервис **cats-api-service**:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/22_get_service.png)
 
-9. Теперь сделаем конфиг с Ингрессом: скопипастим образец
+8. Теперь сделаем конфиг с Ингрессом: скопипастим образец
    [тут](https://kind.sigs.k8s.io/docs/user/ingress#using-ingress), создадим файл k8s/**ingress.yaml**,
    подредактируем и получим:  
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress_2.png)  
@@ -385,16 +385,16 @@ correct and that the postmaster is accepting TCP/IP connections_
 Применим этот конфиг:  
 `kubectl apply -f k8s/ingress.yaml` => _ingress.networking.k8s.io/my-ingress created_
 
-10. Посмотрим в файл **kind-config.yaml**. Тут видим порт (**hostPort: 8888**).  
-    Пойдём в браузере на **порт 8888** и посмотрим, что нас ждёт на **cats-api**:  
-    http://localhost:8888/cats-api/api/v1/cat  
-    Видим ошибку 404:  
-    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/24_error_page.png)
-    Ощибка 404 потому что к путю теперь добавлен **cats-api**. Чтобы это пофиксить надо открыть **deployment.yaml** и
-    сказать нашему приложению, чтобы оно слушало нас начиная с **cats-api**. Для этого добавим ещё одну
-    **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути должно стартовать наше
-    приложение. Конечная версия **deployment.yaml** выглядит так:  
-    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/25_deployment_final.png)
+9. Посмотрим в файл **kind-config.yaml**. Тут видим порт (**hostPort: 8888**).  
+   Пойдём в браузере на **порт 8888** и посмотрим, что нас ждёт на **cats-api**:  
+   http://localhost:8888/cats-api/api/v1/cat  
+   Видим ошибку 404:  
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/24_error_page.png)
+   Ошибка 404 потому что к путю теперь добавлен **cats-api**. Чтобы это пофиксить надо открыть **deployment.yaml** и
+   сказать нашему приложению, чтобы оно слушало нас начиная с **cats-api**. Для этого добавим ещё одну
+   **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути должно стартовать наше
+   приложение. Конечная версия **deployment.yaml** выглядит так:  
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/25_deployment_final.png)
 
 Обновим наши поды:     
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment configured_
@@ -413,7 +413,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 - клиент даже не знает, в какой из 3 подов отправился запрос;
 - очень удобно так организовывать масштабирование.
 
-11. Попробуем что-нибудь немножко изменить. Например в **deployment.yaml** поменяем:
+10. Попробуем что-нибудь немножко изменить. Например в **deployment.yaml** поменяем:
 
         spec:
             # replicas: 3 # запустить в таком количестве экземпляров те приложения, которые имеют указанную метку
@@ -431,7 +431,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 http://localhost:8888/cats-api/api/v1/cat  
 и видим, что всё работает.
 
-12. В конце всё удалим:   
+11. В конце всё удалим:   
 `kubectl delete svc --all`  
 `kubectl delete deploy --all`  
 `kind delete cluster --name my-cluster`  

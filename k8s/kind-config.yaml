@@ -9,8 +9,8 @@ nodes:
                   kubeletExtraArgs:
                     node-labels: "ingress-ready=true"
         extraPortMappings:
-            -   hostPort: 8888
-                #                containerPort: 80
+            -   containerPort: 80
+                hostPort: 8888
                 protocol: TCP
     -   role: worker
     -   role: worker
