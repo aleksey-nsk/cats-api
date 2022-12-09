@@ -51,7 +51,7 @@
 
 2. Чтобы сэкономить время и не билдить каждый раз в консоли руками, создаём в корне скрипт **build_and_push.sh** с
    содержимым:  
-   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/06_build_script.png)
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/06_build_script_2.png)
 
 - `docker build -t alexz2/cats-api:1.0.0 . -f ./Dockerfile` - сбилдить образ
 - `docker build` - команда для создания образа
@@ -192,7 +192,7 @@ testing Kubernetes itself, but may be used for local development or CI.
     sudo mv ./kind /usr/local/bin/kind
 
 В итоге видим:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/12_kind.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/12_kind_2.png)
 
 Проверяем версию в консоли:  
 `kind version` => _kind **v0.11.1** go1.16.4 linux/amd64_
@@ -213,7 +213,7 @@ kubectl для развертывания приложений, проверки
 - Переместить двоичный файл в директорию из переменной окружения PATH:  
   `sudo mv ./kubectl /usr/local/bin/kubectl`  
   В итоге видим:  
-  ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/13_kubectl.png)
+  ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/13_kubectl_2.png)
 
 - Проверить установленную версию:  
   `kubectl version --client` => _Client Version: version.Info{Major:"1", Minor:"23", GitVersion:"v1.23.0", GitCommit:"
