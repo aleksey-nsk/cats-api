@@ -20,7 +20,9 @@
 - Для документирования REST API используем **Springdoc OpenAPI UI**. Для этого нужно добавить зависимость:  
   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/03_springdoc.png)
 
-Открываем приложение (список всех котиков) по адресу: http://localhost:8081/api/v1/cat
+Открываем приложение (список всех котиков) по адресу: http://localhost:8081/api/v1/cat  
+
+Текущий IP адресс: http://localhost:8081/api/v1/ip => **127.0.1.1**  
 
 Документация к API доступна по адресу: http://localhost:8081/swagger-ui/index.html. Тут же можно тестировать конечные
 точки (кнопка "**Try it out**"):  
