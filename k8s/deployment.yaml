@@ -11,7 +11,8 @@ metadata:
         app: cats-api
 
 spec:
-    replicas: 3  # количество экземпляров
+    #    replicas: 3  # количество экземпляров
+    replicas: 1
 
     # С какими подами наш деплоймент будет работать
     selector:
@@ -31,3 +32,10 @@ spec:
                     image: alexz2/cats-api:1.0.0
                     ports:
                         -   containerPort: 8081  # откроем порт
+
+                    env:
+                        -   name: DATASOURCE_HOST
+                            value: 192.168.1.69
+
+#                        -   name: spring.mvc.servlet.path
+#                            value: /cats-api

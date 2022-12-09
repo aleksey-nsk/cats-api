@@ -281,6 +281,18 @@ kubectl для развертывания приложений, проверки
 
 => _pod/ingress-nginx-controller-59cbb6ccb6-mkdww condition met_ (всё ок, Ingress поставился).
 
+Схема 1 Кубернетес кластера с Ingress Controller-ом:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic1.png)    
+
+Схема 2:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic2.png)  
+
+Схема 3:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic3.png)  
+
+Схема 4:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_8_pic4.png)  
+
 7. Начнём с самого нижнего уровня, который связан с **подами**. Посмотрим как сделать конфиг, чтобы Кубернетес-кластер
    нас понял и запустил наше приложение в 3 экземплярах.
 
@@ -294,7 +306,7 @@ kubectl для развертывания приложений, проверки
 В папку **k8s** будем складывать все конфиги, связанные с Кубернетесом. В самом конце тут будут такие конфиги:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/16_k8s_directory.png)
 
-Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. Получается так:  
+Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. В результате получается так:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment.png)  
 
 Далее команда в терминале:    
@@ -307,16 +319,15 @@ kubectl для развертывания приложений, проверки
 `kubectl get pods --watch`
 
 В итоге смотрим поды:    
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/18_get_pods.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/18_1_get_pods.png)
 
 Видим, что поды запускаются и крашатся. Посмотрим ошибку командой:  
 `kubectl logs cats-api-deployment-58b69bb468-b5xpv`  
-Ошибка такая: _org.postgresql.util.PSQLException: Connection to localhost:15432 refused_  
-Нужно добавить **environment-переменную**: опять идём в **deployment.yaml** и добавляем блок env:
-
-    env:
-        -   name: DATASOURCE_HOST
-            value: 192.168.1.35
+Ошибка такая:  
+_org.postgresql.util.PSQLException: Connection to localhost:15431 refused. Check that the hostname and port are
+correct and that the postmaster is accepting TCP/IP connections_  
+Нужно добавить **environment-переменную**: опять идём в **deployment.yaml** и добавляем блок env:  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/18_2_env.png)  
 
 Далее удалим поды:  
 `kubectl delete pods --all` => все поды удалены.  
@@ -324,7 +335,8 @@ kubectl для развертывания приложений, проверки
 нарушается, то он пытается восстановить это. Поэтому пишу:  
 `kubectl delete deployments --all` => _deployment.apps "cats-api-deployment" deleted_  
 И вот теперь:  
-`kubectl get pods` => _No resources found in default namespace._
+`kubectl get pods` => _No resources found in default namespace._  
+`kubectl get deployments` => _No resources found in default namespace._  
 
 Далее:    
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment created_  
@@ -334,17 +346,17 @@ kubectl для развертывания приложений, проверки
 и видим что теперь всё запустилось и всё ок:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/20_pod_ok.png)
 
-Мы можем больше: мы можем **пробросить порт**:    
+Мы можем больше: мы можем **пробросить порт (сделать порт-форвард)**:    
 `kubectl port-forward cats-api-deployment-869476485d-k2txk 8899:8081`  
 где **8899** - порт на хост-машине, **8081** - порт внутри контейнера.  
 Теперь приложение в браузере доступно по адресу: http://localhost:8899/api/v1/cat  
 Документация - по адресу: http://localhost:8899/swagger-ui/index.html
 
-8. Далее перейдём к уровню с **сервисами**. Гуглим "_kubernetes service example_" и
-   открываем [инструкцию по Service](https://kubernetes.io/docs/concepts/services-networking/service/). Тут скопипастим
+8. Далее перейдём к уровню с **сервисами**. Гуглим "_kubernetes service example_" и открываем  
+   [инструкцию по Service](https://kubernetes.io/docs/concepts/services-networking/service/). Тут скопипастим
    пример сервиса.
 
-Создаём в папке **k8s** файл **service.yaml**, вставляем пример сервиса, редактируем и получаем:  
+Создаём файл k8s/**service.yaml**, вставляем пример сервиса, редактируем и получаем:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/21_service.png)
 
 Применим свой сервис:  
@@ -354,9 +366,10 @@ kubectl для развертывания приложений, проверки
 `kubectl get service` => увидим наш сервис **cats-api-service**:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/22_get_service.png)
 
-9. Теперь сделаем конфиг с Ингрессом: скопипастим образец [тут](https://kind.sigs.k8s.io/docs/user/ingress/), создадим
-   файл k8s/**ingress.yaml**, подредактируем и получим:  
-   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress.png)
+9. Теперь сделаем конфиг с Ингрессом: скопипастим образец
+   [тут](https://kind.sigs.k8s.io/docs/user/ingress#using-ingress), создадим файл k8s/**ingress.yaml**,
+   подредактируем и получим:  
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress.png)  
 
 - это и будет единая точка входа в наш кластер;
 - назвали `my-ingress`.

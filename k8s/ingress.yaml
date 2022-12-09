@@ -1,15 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
     name: my-ingress
+
 spec:
     rules:
         -   http:
                 paths:
                     -   pathType: Prefix
-                        path: "/cats-api"
                         backend:
                             service:
-                                name: cats-api-service
+                                name: cats-api-service  # на какой сервис отправлять
                                 port:
-                                    number: 80
+                                    number: 8891
+                        #                        path: "/cats-api"
+                        path: /
