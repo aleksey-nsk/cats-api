@@ -224,7 +224,7 @@ kubectl для развертывания приложений, проверки
    возьмём [отсюда](https://kind.sigs.k8s.io/docs/user/ingress/).
 
 Создадим конфиг k8s/**kind-config.yaml** с таким содержимым:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/14_kind_config.png)
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/14_kind_config_2.png)
 
 - `kind: Cluster` - видим что в нашем конфиге описан кластер.
 - `apiVersion: kind.x-k8s.io/v1alpha4` - версия.
@@ -252,10 +252,10 @@ kubectl для развертывания приложений, проверки
 Теперь создаём кластер командой:  
 `kind create cluster --name my-cluster --config kind-config.yaml`    
 и видим что кластер создался:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_1_cluster.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_1_cluster_2.png)  
 
 Снова посмотрим конфигурацию kubectl:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_2_config.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_2_config_2.png)  
 
 Посмотрим ноды кластера:    
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_3_get_nodes.png)  
@@ -307,7 +307,7 @@ kubectl для развертывания приложений, проверки
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/16_k8s_directory.png)
 
 Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. В результате получается так:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment_2.png)  
 
 Далее команда в терминале:    
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment created_
@@ -369,7 +369,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 9. Теперь сделаем конфиг с Ингрессом: скопипастим образец
    [тут](https://kind.sigs.k8s.io/docs/user/ingress#using-ingress), создадим файл k8s/**ingress.yaml**,
    подредактируем и получим:  
-   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress.png)  
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress_2.png)  
 
 - это и будет единая точка входа в наш кластер;
 - назвали `my-ingress`.
