@@ -1,27 +1,33 @@
 apiVersion: apps/v1
+
+# Сущность деплоймент
 kind: Deployment
+
 metadata:
-    name: cats-api-deployment # название Деплоймента
+    name: cats-api-deployment  # название деплоймента
+
+    # Лучше добавлять метки всегда
     labels:
-        app: cats-api # метка
+        app: cats-api
+
 spec:
-    # replicas: 3 # запустить в таком количестве экземпляров те приложения, которые имеют указанную метку
-    replicas: 10
+    replicas: 3  # количество экземпляров
+
+    # С какими подами наш деплоймент будет работать
     selector:
         matchLabels:
-            app: cats-api # по какой метке матчить
-    template: # в блоке template описываются параметры запуска нашего приложения
+            app: cats-api  # по какой метке матчить
+
+    # Тут описываем поды
+    template:
         metadata:
             labels:
-                app: cats-api # с какой меткой запустить наше приложение
+                app: cats-api  # с какой меткой запустить наше приложение
+
+        # Спецификация самого пода
         spec:
             containers:
-                -   name: cats-api-container
+                -   name: cats-api-container  # имя контейнера
                     image: alexz2/cats-api:1.0.0
                     ports:
-                        -   containerPort: 8081
-                    env:
-                        -   name: DATASOURCE_HOST
-                            value: 192.168.1.35
-                        -   name: spring.mvc.servlet.path
-                            value: /cats-api
+                        -   containerPort: 8081  # откроем порт

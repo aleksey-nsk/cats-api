@@ -269,7 +269,7 @@ kubectl для развертывания приложений, проверки
    которая ставит этот плагин:  
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml`  
    
-результат команды:  
+результат выполнения команды:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_7_ingress_setup.png)  
 
 Далее команда:
@@ -291,13 +291,11 @@ kubectl для развертывания приложений, проверки
 **Deployment** - это как раз та сущность Кубернетеса, которая отвечает за поды. И описав Деплоймент, мы можем описать,
 какие поды и в скольки экземплярах нам нужны.
 
-Создадим в корне проекта папку **k8s** и в неё будем складывать все конфиги, связанные с Кубернетесом. В самом конце тут
-будут такие конфиги:  
+В папку **k8s** будем складывать все конфиги, связанные с Кубернетесом. В самом конце тут будут такие конфиги:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/16_k8s_directory.png)
 
 Сперва создаём **deployment.yaml**, вставляем сюда пример конфига и немного редактируем. Получается так:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/17_deployment.png)  
-`kind: Deployment` - видим, что это сущность Деплоймент.
 
 Далее команда в терминале:    
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment created_
