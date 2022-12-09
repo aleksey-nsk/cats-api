@@ -240,7 +240,7 @@ kubectl для развертывания приложений, проверки
   ab69524f795c42094a6630298ff53f3c3ebab7f4", GitTreeState:"clean", BuildDate:"2021-12-07T18:16:20Z", GoVersion:"
   go1.17.3", Compiler:"gc", Platform:"linux/amd64"}_
 
-4. Запустим **kind** так, чтобы на него можно было потом легко установить Ingress: пример конфига
+4. Запустим кластер **kind** так, чтобы на него можно было потом легко установить Ingress: пример конфига
    возьмём [отсюда](https://kind.sigs.k8s.io/docs/user/ingress/).
 
 Создадим конфиг k8s/**kind-config.yaml** с таким содержимым:  
