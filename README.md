@@ -261,7 +261,9 @@ kubectl для развертывания приложений, проверки
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_3_get_nodes.png)  
 
 Также проверим следующие команды:  
-![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_4_docker_commands.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_4_docker_commands_1.png)    
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_5_docker_commands_2.png)  
+![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_6_docker_commands_3.png)  
 
 6.Теперь установим [Ingress NGINX плагин](https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx). Команда в консоли
 которая ставит этот плагин:  
