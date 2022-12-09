@@ -253,7 +253,7 @@ kubectl для развертывания приложений, проверки
 - `kubeadmConfigPatches` - конфигурация для **kind**-а, чтобы всё потом заработало с **Ingress**-ом.
 - `extraPortMappings` - на мастер-ноде прокидываем порты, чтобы как раз была единая точка входа, т.е. на мастере будет
   открыт конкретный порт, на который мы будем слать запросы.
-- `role: worker` - также сделаем 3 **воркера**. В итоге будет 1 мастер и 3 воркера.
+- `role: worker` - также сделаем 2 **воркера**. В итоге будет 1 мастер и 2 воркера.
 
 Сначала убедимся, что кластер отсутствует:  
 `kind get clusters` => вывод в терминал такой: _No kind clusters found._  
@@ -270,9 +270,12 @@ kubectl для развертывания приложений, проверки
     users: null
    
 Теперь создаём кластер командой:  
-`kind create cluster --name my-cluster --config kind-config.yaml`    
+`kind create cluster --name my-cluster --config k8s/kind-config.yaml`    
 и видим что кластер создался:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_1_cluster_2.png)  
+
+Также посмотрим кластер командой:  
+`kind get clusters` => _my-cluster_
 
 Снова посмотрим конфигурацию kubectl:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/15_2_config_2.png)  
