@@ -28,7 +28,7 @@
 
 1. Сначала поместим наш кошачий сервис в Docker-контейнер. Для этого создаём в корне проекта **Dockerfile** с
    содержимым:  
-   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/05_dockerfile_2.png)
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/05_dockerfile_3.png)
 
 - `alpine` - a minimal Docker image based on **Alpine Linux** with a complete package index and only 5 MB in size!
   **Alpine Linux** - дистрибутив Linux, ориентированный на безопасность, легковесность и нетребовательность к ресурсам.
