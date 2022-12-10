@@ -384,9 +384,9 @@ correct and that the postmaster is accepting TCP/IP connections_
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress_2.png)  
 
 - это и будет единая точка входа в наш кластер;
-- назвали `my-ingress`.
+- описали в этом файле **рулы (правила)**.  
 
-Применим этот конфиг:  
+Применим этот конфиг (создадим **Ingress Rules**):  
 `kubectl apply -f k8s/ingress.yaml` => _ingress.networking.k8s.io/my-ingress created_
 
 9. Посмотрим в файл **kind-config.yaml**. Тут видим порт (**hostPort: 8888**).  

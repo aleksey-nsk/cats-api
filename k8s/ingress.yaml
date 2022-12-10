@@ -14,5 +14,4 @@ spec:
                                 name: cats-api-service  # на какой сервис отправлять
                                 port:
                                     number: 8891
-                        #                        path: "/cats-api"
-                        path: /
+                        path: "/cats-api"
