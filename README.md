@@ -394,10 +394,10 @@ correct and that the postmaster is accepting TCP/IP connections_
    http://localhost:8888/cats-api/api/v1/cat  
    Видим ошибку 404:  
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/24_error_page.png)
-   Ошибка 404 потому что к путю теперь добавлен **cats-api**. Чтобы это пофиксить надо открыть **deployment.yaml** и
-   сказать нашему приложению, чтобы оно слушало нас начиная с **cats-api**. Для этого добавим ещё одну
-   **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути должно стартовать наше
-   приложение:  
+   Ошибка 404 потому что к путю теперь добавлен **cats-api**. Чтобы это пофиксить надо открыть  
+   k8s/**deployment.yaml** и сказать нашему приложению, чтобы оно слушало нас начиная с **cats-api**. Для этого
+   добавим ещё одну **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути
+   должно стартовать наше приложение:  
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/25_deployment_final.png)
 
 Обновим наши поды:     
