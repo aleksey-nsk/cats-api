@@ -389,7 +389,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 Применим этот конфиг (создадим **Ingress Rules**):  
 `kubectl apply -f k8s/ingress.yaml` => _ingress.networking.k8s.io/my-ingress created_
 
-9. Посмотрим в файл **kind-config.yaml**. Тут видим порт (**hostPort: 8888**).  
+9. Посмотрим в файл k8s/**kind-config.yaml**. Тут видим порт (**hostPort: 8888**).  
    Пойдём в браузере на **порт 8888** и посмотрим, что нас ждёт на **cats-api**:  
    http://localhost:8888/cats-api/api/v1/cat  
    Видим ошибку 404:  
@@ -397,7 +397,7 @@ correct and that the postmaster is accepting TCP/IP connections_
    Ошибка 404 потому что к путю теперь добавлен **cats-api**. Чтобы это пофиксить надо открыть **deployment.yaml** и
    сказать нашему приложению, чтобы оно слушало нас начиная с **cats-api**. Для этого добавим ещё одну
    **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути должно стартовать наше
-   приложение. Конечная версия **deployment.yaml** выглядит так:  
+   приложение:  
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/25_deployment_final.png)
 
 Обновим наши поды:     
@@ -408,7 +408,8 @@ correct and that the postmaster is accepting TCP/IP connections_
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/26_new_pods.png)
 
 Опять пробуем открыть: http://localhost:8888/cats-api/api/v1/cat и теперь видим список всех котиков.  
-Документация теперь доступна по адресу: http://localhost:8888/cats-api/swagger-ui/index.html
+Документация теперь доступна по адресу: http://localhost:8888/cats-api/swagger-ui/index.html  
+Текущий IP адрес: http://localhost:8888/cats-api/api/v1/ip => 
 
 Т.е мы в итоге проходим полный путь:
 
