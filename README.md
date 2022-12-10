@@ -396,7 +396,7 @@ correct and that the postmaster is accepting TCP/IP connections_
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/24_error_page.png)
    Ошибка 404 потому что к путю теперь добавлен **cats-api**. Чтобы это пофиксить надо открыть  
    k8s/**deployment.yaml** и сказать нашему приложению, чтобы оно слушало нас начиная с **cats-api**. Для этого
-   добавим ещё одну **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е с этого пути
+   добавим ещё одну **переменную окружения**, которая называется **spring.mvc.servlet.path**, т.е. с этого пути
    должно стартовать наше приложение:  
    ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/25_deployment_final.png)
 
@@ -409,7 +409,9 @@ correct and that the postmaster is accepting TCP/IP connections_
 
 Опять пробуем открыть: http://localhost:8888/cats-api/api/v1/cat и теперь видим список всех котиков.  
 Документация теперь доступна по адресу: http://localhost:8888/cats-api/swagger-ui/index.html  
-Текущий IP адрес: http://localhost:8888/cats-api/api/v1/ip => 
+Текущий IP адрес: http://localhost:8888/cats-api/api/v1/ip => **10.244.2.9** или **10.244.1.10** или **10.244.1.9**,
+т.к. "прыгает" на разные поды (у нас сейчас 3 пода).  
+Для проверки делаем запросы на все 3 адреса с помощью Postman.
 
 Т.е мы в итоге проходим полный путь:
 
