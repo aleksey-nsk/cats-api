@@ -420,13 +420,14 @@ correct and that the postmaster is accepting TCP/IP connections_
 - клиент даже не знает, в какой из 3 подов отправился запрос;
 - очень удобно так организовывать масштабирование.
 
-10. Попробуем что-нибудь немножко изменить. Например в **deployment.yaml** поменяем:
+10. Попробуем что-нибудь немножко изменить. Например в k8s/**deployment.yaml** поменяем:
 
         spec:
-            # replicas: 3 # запустить в таком количестве экземпляров те приложения, которые имеют указанную метку
+            # replicas: 3  # количество экземпляров
             replicas: 10
 
-т.е. теперь сделаем **10 инстансов**. Если бы мы это делали без Кубернетеса, то это было бы очень тяжело.
+т.е. теперь сделаем **10 инстансов**. Если бы мы это делали без Кубернетеса,
+то было бы труднее.
 
 Говорим применить:   
 `kubectl apply -f k8s/deployment.yaml` => _deployment.apps/cats-api-deployment configured_
@@ -434,8 +435,11 @@ correct and that the postmaster is accepting TCP/IP connections_
 Теперь смотрим поды: `kubectl get pods` => и видим все 10 штук:  
 ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/27_now_10_pods.png)
 
-Далее опять открываем:  
-http://localhost:8888/cats-api/api/v1/cat  
+Далее опять открываем адреса в браузере:  
+- http://localhost:8888/cats-api/api/v1/cat => список котиков;
+- http://localhost:8888/cats-api/swagger-ui/index.html => документация;
+- http://localhost:8888/cats-api/api/v1/ip => **10.244.2.12**/**10.244.1.10**/**10.244.1.12**/**10.244.2.9**/
+  **10.244.2.11**/**10.244.1.9**/**10.244.1.13**/**10.244.2.13**/**10.244.1.11**/**10.244.2.10**  
 и видим, что всё работает.
 
 11. В конце всё удалим:   

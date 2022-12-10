@@ -11,7 +11,8 @@ metadata:
         app: cats-api
 
 spec:
-    replicas: 3  # количество экземпляров
+    # replicas: 3  # количество экземпляров
+    replicas: 10
 
     # С какими подами наш деплоймент будет работать
     selector:
