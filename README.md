@@ -381,7 +381,7 @@ correct and that the postmaster is accepting TCP/IP connections_
 8. Теперь сделаем конфиг с Ингрессом: скопипастим образец
    [тут](https://kind.sigs.k8s.io/docs/user/ingress#using-ingress), создадим файл k8s/**ingress.yaml**,
    подредактируем и получим:  
-   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress_2.png)  
+   ![](https://github.com/aleksey-nsk/cats-api/blob/master/screenshots/23_ingress.png)  
 
 - это и будет единая точка входа в наш кластер;
 - описали в этом файле **рулы (правила)**.  
